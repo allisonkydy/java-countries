@@ -230,4 +230,16 @@ public class CountryList
     return tempArray;
   }
 
+  public Country findCountry(CheckCountry tester)
+  {
+    for (Country c : countryList)
+    {
+      if (tester.test(c))
+      {
+        return c;
+      }
+    }
+    return null;
+  }
+
 }

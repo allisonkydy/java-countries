@@ -153,4 +153,27 @@ public ResponseEntity<?> getLargestAge()
 
     return new ResponseEntity<>(resData, HttpStatus.OK);
   }
+
+  // For more practice...
+
+  // /name/{country}
+  // return data for the given country
+  @GetMapping(value = "/name/{country}",
+              produces = {"application/json"})
+  public ResponseEntity<?> getCountryByName(@PathVariable String country)
+  {
+    return new ResponseEntity<>(CountrySearchApplication.countryData.findCountry(c -> c.getName().compareToIgnoreCase(country) == 0), HttpStatus.OK);
+  }
+
+  // /land/all
+  // return the countries sorted by land mass, descending
+  @GetMapping(value = "/land/all",
+              produces = {"application/json"})
+  public ResponseEntity<?> getAllCountriesByLandMass()
+  {
+    // sort countries by land mass
+    CountrySearchApplication.countryData.countryList.sort((c1, c2) -> c2.getLandMass() - c1.getLandMass());
+
+    return new ResponseEntity<>(CountrySearchApplication.countryData.countryList, HttpStatus.OK);
+  }
 }
