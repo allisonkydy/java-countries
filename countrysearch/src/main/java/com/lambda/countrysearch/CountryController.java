@@ -17,7 +17,7 @@ public class CountryController
               produces = {"application/json"})
   public ResponseEntity<?> getAllCountryNames()
   {
-    // sort the country list
+    // sort the country list alphabetcially
     CountrySearchApplication.countryData.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 
     return new ResponseEntity<>(CountrySearchApplication.countryData.countryList, HttpStatus.OK);
@@ -27,19 +27,31 @@ public class CountryController
 //  return the countries alphabetically that begin with the given letter
   @GetMapping(value =  "/names/start/{letter}",
               produces = {"application/json"})
-  public ResponseEntity<?> getCountryByFirstLetter(@PathVariable char letter)
+  public ResponseEntity<?> getCountriesByFirstLetter(@PathVariable char letter)
   {
     // find countries that begin with letter from path
-    ArrayList<Country> resCountries = CountrySearchApplication.countryData.findCountries(c -> c.getName().toUpperCase().charAt(0) == Character.toUpperCase(letter));
+    ArrayList<Country> resData = CountrySearchApplication.countryData.findCountries(c -> c.getName().toUpperCase().charAt(0) == Character.toUpperCase(letter));
 
-    // sort the country list
-    resCountries.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+    // sort the country list alphabetically
+    resData.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 
-    return new ResponseEntity<>(resCountries, HttpStatus.OK);
+    return new ResponseEntity<>(resData, HttpStatus.OK);
   }
 
 //  /names/size/{number}
 //  return the countries alphabetically that have a name equal to or longer than the given length
+  @GetMapping(value = "/names/size/{number}",
+              produces = {"application/json"})
+  public ResponseEntity<?> getCountriesByLength(@PathVariable int number)
+  {
+    // find countries with name equal to or longer than given length
+    ArrayList<Country> resData = CountrySearchApplication.countryData.findCountries(c -> c.getName().length() >= number);
+
+    // sort the country list alphabetically
+    resData.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+
+    return new ResponseEntity<>(resData, HttpStatus.OK);
+  }
 
 //  /population/size/{people}
 //  return the countries that have a population equal to or greater than the given population
