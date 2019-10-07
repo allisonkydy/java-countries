@@ -92,6 +92,18 @@ public class CountryController
 //    Stretch Goal
 //  /population/median
 //  return the country with the median population
+  @GetMapping(value = "/population/median",
+              produces = {"application/json"})
+  public ResponseEntity<?> getMedianPopulation()
+  {
+    // sort by population, ascending
+    CountrySearchApplication.countryData.countryList.sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
+
+    // get country at middle of list
+    Country resData = CountrySearchApplication.countryData.countryList.get(CountrySearchApplication.countryData.countryList.size() / 2);
+
+    return new ResponseEntity<>(resData, HttpStatus.OK);
+  }
 
 //  /age/age/{age}
 //  return the countries that have a median age equal to or greater than the given age
