@@ -67,6 +67,15 @@ public class CountryController
 
 //  /population/min
 //  return the country with the smallest population
+  @GetMapping(value = "/population/min",
+              produces = {"application/json"})
+  public ResponseEntity<?> getSmallestPopulation()
+  {
+    // sort countries by population, ascending
+    CountrySearchApplication.countryData.countryList.sort((c1, c2) -> (int)(c1.getPopulation() - c2.getPopulation()));
+
+    return new ResponseEntity<>(CountrySearchApplication.countryData.countryList.get(0), HttpStatus.OK);
+  }
 
 //  /population/max
 //  return the country with the largest population
