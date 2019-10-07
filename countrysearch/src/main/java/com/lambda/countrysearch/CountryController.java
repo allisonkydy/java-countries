@@ -116,6 +116,15 @@ public class CountryController
 
 //  /age/max
 //  return the country the the greatest median age
+@GetMapping(value = "age/max",
+            produces = {"application/json"})
+public ResponseEntity<?> getLargestAge()
+{
+  // sort countries by median age, descending
+  CountrySearchApplication.countryData.countryList.sort((c1, c2) -> (c2.getMedianAge() - c1.getMedianAge()));
+
+  return new ResponseEntity<>(CountrySearchApplication.countryData.countryList.get(0), HttpStatus.OK);
+}
 
 //    Stretch Goal
 //  /age/median
