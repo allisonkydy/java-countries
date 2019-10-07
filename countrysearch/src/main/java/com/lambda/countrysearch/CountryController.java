@@ -141,4 +141,16 @@ public ResponseEntity<?> getLargestAge()
 //    Stretch Goal
 //  /age/median
 //  return the country with the median median age
+  @GetMapping(value = "/age/median",
+              produces = {"application/json"})
+  public ResponseEntity<?> getMedianMedianAge()
+  {
+    // sort countries by median age, ascending
+    CountrySearchApplication.countryData.countryList.sort((c1, c2) -> c1.getMedianAge() - c2.getMedianAge());
+
+    // get country at middle of list
+    Country resData = CountrySearchApplication.countryData.countryList.get(CountrySearchApplication.countryData.countryList.size() / 2);
+
+    return new ResponseEntity<>(resData, HttpStatus.OK);
+  }
 }
