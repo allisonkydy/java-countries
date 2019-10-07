@@ -79,6 +79,15 @@ public class CountryController
 
 //  /population/max
 //  return the country with the largest population
+  @GetMapping(value = "/population/max",
+              produces = {"application/json"})
+  public ResponseEntity<?> getLargestPopulation()
+  {
+    // sort countries by population, descending
+    CountrySearchApplication.countryData.countryList.sort((c1, c2) -> (int)(c2.getPopulation() - c1.getPopulation()));
+
+    return new ResponseEntity<>(CountrySearchApplication.countryData.countryList.get(0), HttpStatus.OK);
+  }
 
 //    Stretch Goal
 //  /population/median
