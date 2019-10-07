@@ -17,7 +17,7 @@ public class CountryController
               produces = {"application/json"})
   public ResponseEntity<?> getAllCountryNames()
   {
-    // sort the country list alphabetcially
+    // sort the country list alphabetically
     CountrySearchApplication.countryData.countryList.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 
     return new ResponseEntity<>(CountrySearchApplication.countryData.countryList, HttpStatus.OK);
@@ -42,7 +42,7 @@ public class CountryController
 //  return the countries alphabetically that have a name equal to or longer than the given length
   @GetMapping(value = "/names/size/{number}",
               produces = {"application/json"})
-  public ResponseEntity<?> getCountriesByLength(@PathVariable int number)
+  public ResponseEntity<?> getCountriesByNameLength(@PathVariable int number)
   {
     // find countries with name equal to or longer than given length
     ArrayList<Country> resData = CountrySearchApplication.countryData.findCountries(c -> c.getName().length() >= number);
@@ -55,6 +55,15 @@ public class CountryController
 
 //  /population/size/{people}
 //  return the countries that have a population equal to or greater than the given population
+  @GetMapping(value = "/population/size/{people}",
+              produces = {"application/json"})
+  public ResponseEntity<?> getCountriesByPopulation(@PathVariable long people)
+  {
+    // find countries with equal or greater population size
+    ArrayList<Country> resData = CountrySearchApplication.countryData.findCountries(c -> c.getPopulation() >= people);
+
+    return new ResponseEntity<>(resData, HttpStatus.OK);
+  }
 
 //  /population/min
 //  return the country with the smallest population
