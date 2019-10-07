@@ -213,4 +213,21 @@ public class CountryList
     countryList.add(new Country("Seychelles",95702,460,36));
   }
 
+  // filter methods
+
+  public ArrayList<Country> findCountries(CheckCountry tester)
+  {
+    ArrayList<Country> tempArray = new ArrayList<>();
+
+    for (Country c : countryList)
+    {
+      if (tester.test(c))
+      {
+        tempArray.add(c);
+      }
+    }
+
+    return tempArray;
+  }
+
 }
